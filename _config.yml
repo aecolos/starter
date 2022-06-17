@@ -55,7 +55,7 @@ prose:
           element: "text"
           label: "Permalink"
           value: ""
-     _posts/news:
+    _posts/news:
       - name: "layout"
         field:
           element: "hidden"
