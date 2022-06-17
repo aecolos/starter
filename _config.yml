@@ -56,6 +56,10 @@ prose:
           label: "Permalink"
           value: ""
     _posts/news:
+      - name: "category"
+        field:
+          element: "hidden"
+          value: "news"
       - name: "layout"
         field:
           element: "hidden"
