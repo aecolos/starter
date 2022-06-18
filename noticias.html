@@ -39,10 +39,9 @@ section:
 									<img alt="Noticia 1 Foto" src="./images/noticia_1.png"> </div>
 									<div class="date-wrapper">
 										<i class="icon-calendar"></i><span>{{item.date | date:"%b %d"}}</span>
-										<i class="icon-calendar"></i><span>{{ item.date | date: '%B %Y' }}</span>
 									</div>
 									<div class="lead3">{{item.title}}</div>
-									<div class="p2">{{content}}...</div>
+									<div class="p2">{{item.excerpt}}...</div>
 								</a>
 							</div>
 						{% endfor %}
