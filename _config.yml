@@ -77,18 +77,3 @@ prose:
           element: "text"
           label: "Permalink"
           value: ""
-    _posts/news/all:
-      - name: "layout"
-        field:
-          element: "hidden"
-          value: "main"
-      - name: "title"
-        field:
-          element: "text"
-          label: "Title"
-          value: ""
-      - name: "permalink"
-        field:
-          element: "text"
-          label: "Permalink"
-          value: ""
