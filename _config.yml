@@ -3,6 +3,7 @@ permalink: pretty
 markdown: kramdown
 plugins:
   - jekyll-paginate
+paginate: 1
 prose:
   rooturl: '_posts'
   siteurl: 'http://prose.github.io/starter/'
