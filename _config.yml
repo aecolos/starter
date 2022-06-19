@@ -90,4 +90,4 @@ prose:
         field:
           element: "text"
           label: "Permalink"
-          value: ""
+          value: "news/"
