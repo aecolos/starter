@@ -1,6 +1,6 @@
 ---
 layout: main
-permalink: news/
+permalink:
 section:
 ---
 			<div id="content">
@@ -174,16 +174,6 @@ section:
 						</div>-->
 					</div>
 				</div>
-				<!--<div class="pages-wrapper">
-					<a href="javascript:void(0);"><i class="icon-long-arrow-left">&nbsp;</i></a>
-					<a class="page" href="javascript:void(0);"><span>1</span></a>
-					<a class="page active" href="javascript:void(0);"><span>2</span></a>
-					<a class="page" href="javascript:void(0);"><span>3</span></a>
-					<a class="page" href="javascript:void(0);"><span>4</span></a>
-					<a class="page" href="javascript:void(0);"><span>5</span></a>
-					<a class="page" href="javascript:void(0);"><span>6</span></a>
-					<a href="javascript:void(0);"><i class="icon-long-arrow-right">&nbsp;</i></a>
-				</div>-->
 				<div class="pagination">
 					{% if paginator.previous_page %}
 					  <a href="{{ paginator.previous_page_path }}" class="previous">
@@ -200,5 +190,5 @@ section:
 					{% else %}
 					  <span class="next ">Next</span>
 					{% endif %}
-				  </div>
+				</div>
 			</div>
