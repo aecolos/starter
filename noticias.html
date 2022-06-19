@@ -45,6 +45,21 @@ section:
 								</a>
 							</div>
 						{% endfor %}
+						{% for post in paginator.posts %}
+							<div class="span4">
+								<a href="noticia1">
+									<div class="image-wrapper">
+									<!--<div class="video-icon"><i class="icon-film"></i></div>-->
+									<div class="blue-overlay"></div>
+									<img alt="Noticia 1 Foto" src="./images/noticia_1.png"> </div>
+									<div class="date-wrapper">
+										<i class="icon-calendar"></i><span>{{post.date | date:"%b %d"}}</span>
+									</div>
+									<div class="lead3">{{post.title}}</div>
+									<div class="p2">{{post.excerpt}}</div>
+								</a>
+							</div>
+						{% endfor %}
 							<!--<div class="span4">
 								<a href="noticia2">
 									<div class="image-wrapper">
@@ -159,7 +174,7 @@ section:
 						</div>-->
 					</div>
 				</div>
-				<div class="pages-wrapper">
+				<!--<div class="pages-wrapper">
 					<a href="javascript:void(0);"><i class="icon-long-arrow-left">&nbsp;</i></a>
 					<a class="page" href="javascript:void(0);"><span>1</span></a>
 					<a class="page active" href="javascript:void(0);"><span>2</span></a>
@@ -168,5 +183,22 @@ section:
 					<a class="page" href="javascript:void(0);"><span>5</span></a>
 					<a class="page" href="javascript:void(0);"><span>6</span></a>
 					<a href="javascript:void(0);"><i class="icon-long-arrow-right">&nbsp;</i></a>
-				</div>
+				</div>-->
+				<div class="pagination">
+					{% if paginator.previous_page %}
+					  <a href="{{ paginator.previous_page_path }}" class="previous">
+						Previous
+					  </a>
+					{% else %}
+					  <span class="previous">Previous</span>
+					{% endif %}
+					<span class="page_number ">
+					  Page: {{ paginator.page }} of {{ paginator.total_pages }}
+					</span>
+					{% if paginator.next_page %}
+					  <a href="{{ paginator.next_page_path }}" class="next">Next</a>
+					{% else %}
+					  <span class="next ">Next</span>
+					{% endif %}
+				  </div>
 			</div>
