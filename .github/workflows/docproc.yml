@@ -35,7 +35,7 @@ jobs:
           committer: {
             name: 'aecolos',
             email: 'pedroroque@aecolos.pt.test-google-a.com'
-          },
+          }
         content: file_contents
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
