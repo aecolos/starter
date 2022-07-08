@@ -19,18 +19,18 @@ jobs:
           ref: ${{github.sha}}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: echo "file_contents = `cat ${{ steps.get_file.outputs.data.files[0].filename }}`" >> $GITHUB_ENV
+      - run: echo "file_contents = `cat ${{ fromJson(steps.get_file.outputs.data).files[0].filename }}`" >> $GITHUB_ENV
       - uses: docker://pandoc/core:2.9
         id: process_file
         with:
-          args: "-s ${{ steps.get_file.outputs.data.files[0].contents_url }} -t markdown -o ${{ steps.get_file.outputs.data.files[0].filename }}.md" # -o .md extension?
+          args: "-s ${{ steps.get_file.outputs.data.files[0].contents_url }} -t markdown -o ${{ fromJson(steps.get_file.outputs.data).files[0].filename }}.md" # -o .md extension?
       - uses: octokit/request-action@v2.x
         id: upload_file
         with:
           route: PUT /repos/{owner}/{repo}/contents/{path}
           owner: aecolos
           repo: starter #?
-          path: _posts/${{ steps.process_file.outputs.data.files[0].filename }}.md # refactor filename
+          path: _posts/${{ fromJson(steps.process_file.outputs.data).files[0].filename }}.md # refactor filename
           message: 'new post news'
           #committer:
             #name: 'aecolos'
