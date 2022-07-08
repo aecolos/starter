@@ -30,7 +30,7 @@ jobs:
           route: PUT /repos/{owner}/{repo}/contents/{path}
           owner: aecolos
           repo: starter #?
-          path: _posts/${{ steps.process_file.outputs.data.files[0].filename }} # refactor filename
+          path: _posts/${{ steps.process_file.outputs.data.files[0].filename }}.md # refactor filename
           message: 'new post news'
           #committer:
             #name: 'aecolos'
