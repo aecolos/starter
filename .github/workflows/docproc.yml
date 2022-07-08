@@ -23,7 +23,7 @@ jobs:
       - uses: docker://pandoc/core:2.9
         id: process_file
         with:
-          args: "-s ${{ steps.get_file.outputs.data.files[0].contents_url }} -t markdown -o ${{ steps.get_file.outputs.data.files[0].filename }}" # -o .md extension?
+          args: "-s ${{ steps.get_file.outputs.data.files[0].contents_url }} -t markdown -o ${{ steps.get_file.outputs.data.files[0].filename }}.md" # -o .md extension?
       - uses: octokit/request-action@v2.x
         id: upload_file
         with:
