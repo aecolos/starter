@@ -34,7 +34,7 @@ jobs:
           #committer:
             #name: 'aecolos'
             #email: 'pedroroque@aecolos.pt.test-google-a.com'
-          content: $file_contents
+          content: ${{btoa('test')}}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: "echo file uploaded: ${{ steps.upload_file.outputs.data }}"
