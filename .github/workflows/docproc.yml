@@ -31,7 +31,7 @@ jobs:
           owner: aecolos
           repo: starter #?
           path: _posts/${{ steps.process_file.outputs.data.files[0].filename }} # refactor filename
-          message: 'new post news',
+          message: 'new post news'
           committer: {
             name: 'aecolos',
             email: 'pedroroque@aecolos.pt.test-google-a.com'
