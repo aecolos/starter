@@ -19,7 +19,7 @@ jobs:
           ref: ${{github.sha}}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: "file_contents = `cat ${{ steps.get_file.outputs.data.files[0].filename }}`"
+      - run: echo "file_contents = `cat ${{ steps.get_file.outputs.data.files[0].filename }}`" >> $GITHUB_ENV
       - uses: docker://pandoc/core:2.9
         id: process_file
         with:
@@ -35,7 +35,7 @@ jobs:
           #committer:
             #name: 'aecolos'
             #email: 'pedroroque@aecolos.pt.test-google-a.com'
-          content: file_contents
+          content: ${{env.file_contents}}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: "echo file uploaded: ${{ steps.upload_file.outputs.data }}"
