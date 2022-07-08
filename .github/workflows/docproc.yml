@@ -32,10 +32,9 @@ jobs:
           repo: starter #?
           path: _posts/${{ steps.process_file.outputs.data.files[0].filename }} # refactor filename
           message: 'new post news'
-          committer: {
-            name: 'aecolos',
+          committer:
+            name: 'aecolos'
             email: 'pedroroque@aecolos.pt.test-google-a.com'
-          }
         content: file_contents
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
