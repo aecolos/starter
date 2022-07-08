@@ -1,0 +1,47 @@
+name: Get file and convert
+on:
+  push:
+    branches:
+      - gh-pages
+    paths:
+      - 'docsx/**'
+
+jobs:
+  convert_via_pandoc:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: octokit/request-action@v2.x
+        id: get_file
+        with:
+          route: GET /repos/{owner}/{repo}/commits/{ref}
+          owner: aecolos
+          repo: starter
+          ref: ${{github.sha}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: "file_contents = `cat ${{ steps.get_file.outputs.data.files[0].filename }}`"
+      - uses: docker://pandoc/core:2.9
+        id: process_file
+        with:
+          args: "-s ${{ steps.get_file.outputs.data.files[0].contents_url }} -t markdown -o ${{ steps.get_file.outputs.data.files[0].filename }}" # -o .md extension?
+      - uses: octokit/request-action@v2.x
+        id: upload_file
+        with:
+          route: PUT /repos/{owner}/{repo}/contents/{path}
+          owner: aecolos
+          repo: starter #?
+          path: _posts/${{ steps.process_file.outputs.data.files[0].filename }} # refactor filename
+          message: 'new post news',
+          committer: {
+            name: 'aecolos',
+            email: 'pedroroque@aecolos.pt.test-google-a.com'
+          },
+        content: file_contents
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: "echo file uploaded: ${{ steps.upload_file.outputs.data }}"
+      #- uses: actions/github-script@v6
+        #with:
+          #script: |
+            #const file_content = github.rest.repos.getContent('aecolos', 'site', '/docsx')
+            #console.log(file_content)
