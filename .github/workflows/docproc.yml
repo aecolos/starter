@@ -22,14 +22,14 @@ jobs:
       - uses: docker://pandoc/core:2.9
         id: process_file
         with:
-          args: "-s ${{ fromJson(steps.get_file.outputs.data).files[0].contents_url }} -t markdown -o ${{ fromJson(steps.get_file.outputs.data).files[0].filename.slice(0,-5) }}.md" # -o .md extension?
+          args: "-s ${{ fromJson(steps.get_file.outputs.data).files[0].contents_url }} -t markdown -o ${{ fromJson(steps.get_file.outputs.data).files[0].filename }}.slice(0,-5).md" # -o .md extension?
       - uses: octokit/request-action@v2.x
         id: upload_file
         with:
           route: PUT /repos/{owner}/{repo}/contents/{path}
           owner: aecolos
           repo: starter #?
-          path: _posts/${{ fromJson(steps.process_file.outputs.data).files[0].filename.slice(0,-5) }}.md # refactor filename
+          path: _posts/${{ fromJson(steps.process_file.outputs.data).files[0].filename }}.slice(0,-5).md # refactor filename
           message: 'new post news'
           #committer:
             #name: 'aecolos'
