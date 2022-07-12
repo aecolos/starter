@@ -24,7 +24,8 @@ jobs:
         with:
           args: "-s ${{ fromJson(steps.get_file.outputs.data).files[0].contents_url }} -t markdown -o test.md" #${{ fromJson(steps.get_file.outputs.data).files[0].filename }}.md # -o .md extension?
       - name: Build ENV
-        run: echo "fileB64 = $(base64 -d  _posts/test.md)" >> $GITHUB_ENV
+        id: set_env
+        run: echo "::set-output name=fileB64::$(base64 -d  _posts/test.md)" >> $GITHUB_ENV
       - uses: octokit/request-action@v2.x
         id: upload_file
         with:
@@ -36,7 +37,7 @@ jobs:
           #committer:
             #name: 'aecolos'
             #email: 'pedroroque@aecolos.pt.test-google-a.com'
-          content: ${{env.fileB64}}
+          content: ${{steps.set_env.outputs.fileB64}}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: "echo file uploaded: ${{ steps.upload_file.outputs.data }}"
