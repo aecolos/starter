@@ -36,7 +36,7 @@ jobs:
           #committer:
             #name: 'aecolos'
             #email: 'pedroroque@aecolos.pt.test-google-a.com'
-          content: ${{env.fileb64}}
+          content: ${{env.fileB64}}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: "echo file uploaded: ${{ steps.upload_file.outputs.data }}"
