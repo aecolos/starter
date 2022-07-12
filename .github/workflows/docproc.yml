@@ -40,7 +40,7 @@ jobs:
           content: ${{steps.set_env.outputs.fileB64}}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: "echo file uploaded: ${{ steps.upload_file.outputs.data }}"
+      #- run: "echo file uploaded: ${{ steps.upload_file.outputs.data }}"
       #- uses: actions/github-script@v6
         #with:
           #script: |
