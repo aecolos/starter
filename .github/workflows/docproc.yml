@@ -27,6 +27,13 @@ jobs:
         id: set_env
         run: echo "::set-output name=fileB64::$(base64  test.md)"
       - uses: octokit/request-action@v2.x
+        id: get_file_sha
+        with:
+          route: GET /repos/{owner}/{repo}/contents/{path}
+          owner: aecolos
+          repo: starter #?
+          path: _posts/test.md #${{ fromJson(steps.process_file.outputs.data).files[0].filename }}.md # refactor filename
+      - uses: octokit/request-action@v2.x
         id: upload_file
         with:
           route: PUT /repos/{owner}/{repo}/contents/{path}
@@ -38,6 +45,7 @@ jobs:
             #name: 'aecolos'
             #email: 'pedroroque@aecolos.pt.test-google-a.com'
           content: ${{steps.set_env.outputs.fileB64}}
+          sha: ${{steps.get_file_sha.outputs.data.sha}}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       #- run: "echo file uploaded: ${{ steps.upload_file.outputs.data }}"
