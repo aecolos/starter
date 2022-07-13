@@ -48,7 +48,7 @@ jobs:
             #name: 'aecolos'
             #email: 'pedroroque@aecolos.pt.test-google-a.com'
           content: ${{steps.set_env.outputs.fileB64}}
-          sha: ${{fromJson(steps.get_file_sha.outputs.data).content.sha}}
+          sha: ${{fromJson(steps.get_file_sha.outputs.data).sha}}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       #- run: "echo file uploaded: ${{ steps.upload_file.outputs.data }}"
