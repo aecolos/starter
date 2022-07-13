@@ -8,8 +8,6 @@ on:
 jobs:
   convert_via_pandoc:
     runs-on: ubuntu-latest
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: octokit/request-action@v2.x
         id: get_file
@@ -35,6 +33,8 @@ jobs:
           owner: aecolos
           repo: starter #?
           path: _posts/test.md #${{ fromJson(steps.process_file.outputs.data).files[0].filename }}.md # refactor filename
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: octokit/request-action@v2.x
         id: upload_file
         with:
@@ -47,7 +47,7 @@ jobs:
             #name: 'aecolos'
             #email: 'pedroroque@aecolos.pt.test-google-a.com'
           content: ${{steps.set_env.outputs.fileB64}}
-          sha: ${{steps.get_file_sha.outputs.data.sha}}
+          sha: ${{steps.get_file_sha.outputs.data.content.sha}}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       #- run: "echo file uploaded: ${{ steps.upload_file.outputs.data }}"
