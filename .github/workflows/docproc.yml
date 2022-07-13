@@ -8,6 +8,7 @@ on:
 jobs:
   convert_via_pandoc:
     runs-on: ubuntu-latest
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: octokit/request-action@v2.x
         id: get_file
