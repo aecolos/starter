@@ -35,6 +35,7 @@ jobs:
           path: _posts/test.md #${{ fromJson(steps.process_file.outputs.data).files[0].filename }}.md # refactor filename
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: echo "${{ fromJson(steps.get_file_sha.outputs.data) }}"
       - uses: octokit/request-action@v2.x
         id: upload_file
         with:
