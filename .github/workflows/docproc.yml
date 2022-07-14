@@ -23,6 +23,7 @@ jobs:
         id: process_file
         with:
           args: "-s ${{ fromJson(steps.get_file.outputs.data).files[0].contents_url }} -t markdown -o test.md" #${{ fromJson(steps.get_file.outputs.data).files[0].filename }}.md # -o .md extension?
+      - run: cat test.md
       - name: Build ENV
         id: set_env
         run: echo "::set-output name=fileB64::$(base64  test.md)"
