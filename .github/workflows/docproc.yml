@@ -54,8 +54,15 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       #- run: "echo file uploaded: ${{ steps.upload_file.outputs.data }}"
-      #- uses: actions/github-script@v6
-        #with:
-          #script: |
+      - uses: actions/github-script@v6
+        id: scripted_get_file
+        with:
+          script: |
+            return github.request("GET /repos/{owner}/{repo}/commits/{ref}", {
+              owner: "aecolos",
+              repo: "starter",
+              ref: ${{github.sha}}
+            });
             #const file_content = github.rest.repos.getContent('aecolos', 'site', '/docsx')
             #console.log(file_content)
+      - run: echo "${{ steps.scripted_get_file.outputs.result }}"
