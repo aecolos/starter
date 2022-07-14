@@ -32,7 +32,7 @@ jobs:
             github.request("GET /repos/{owner}/{repo}/commits/{ref}", {
               owner: "aecolos",
               repo: "starter",
-              ref: ${{github.sha}}
+              ref: "177cbb653772b78c18e87c5c6f849b9f1eb48c91"
             });
       - run: echo "${{ steps.scripted_get_file.outputs.result }}"
       - name: Build ENV
