@@ -34,8 +34,6 @@ jobs:
               repo: "starter",
               ref: ${{github.sha}}
             });
-            #const file_content = github.rest.repos.getContent('aecolos', 'site', '/docsx')
-            #console.log(file_content)
       - run: echo "${{ steps.scripted_get_file.outputs.result }}"
       - name: Build ENV
         id: set_env
@@ -66,3 +64,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       #- run: "echo file uploaded: ${{ steps.upload_file.outputs.data }}"
+      #const file_content = github.rest.repos.getContent('aecolos', 'site', '/docsx')
+      #console.log(file_content)
