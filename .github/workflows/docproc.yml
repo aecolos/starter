@@ -25,16 +25,16 @@ jobs:
           args: "-s ${{ fromJson(steps.get_file.outputs.data).files[0].contents_url }} -t markdown -o test.md" #${{ fromJson(steps.get_file.outputs.data).files[0].filename }}.md # -o .md extension?
       - run: cat test.md
       - run: echo "$(<test.md)"
-      - uses: actions/github-script@v6
-        id: scripted_get_file
-        with:
-          script: |
-            return github.request("GET /repos/{owner}/{repo}/commits/{ref}", {
-              owner: "aecolos",
-              repo: "starter",
-              ref: "177cbb653772b78c18e87c5c6f849b9f1eb48c91"
-            });
-      - run: echo "${{ steps.scripted_get_file.outputs.result.data }}"
+      #- uses: actions/github-script@v6
+        #id: scripted_get_file
+        #with:
+          #script: |
+            #return github.request("GET /repos/{owner}/{repo}/commits/{ref}", {
+              #owner: "aecolos",
+              #repo: "starter",
+              #ref: "177cbb653772b78c18e87c5c6f849b9f1eb48c91"
+            #});
+      #- run: echo "${{ steps.scripted_get_file.outputs.result.data }}"
       - name: Build ENV
         id: set_env
         run: echo "::set-output name=fileB64::$(base64  test.md)"
@@ -56,9 +56,9 @@ jobs:
           repo: starter #?
           path: _posts/test.md #${{ fromJson(steps.process_file.outputs.data).files[0].filename }}.md # refactor filename
           message: 'new post news'
-          #committer:
-            #name: 'aecolos'
-            #email: 'pedroroque@aecolos.pt.test-google-a.com'
+          committer:
+            name: 'aecolos'
+            email: 'pedroroque@aecolos.pt.test-google-a.com'
           content: ${{steps.set_env.outputs.fileB64}}
           sha: ${{fromJson(steps.get_file_sha.outputs.data).sha}}
         env:
