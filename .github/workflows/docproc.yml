@@ -11,6 +11,7 @@ jobs:
     steps:
       - uses: octokit/request-action@v2.x
         id: get_file
+        concurrency: getfile
         with:
           route: GET /repos/{owner}/{repo}/commits/{ref}
           owner: aecolos
