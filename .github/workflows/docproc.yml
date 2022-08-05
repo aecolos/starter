@@ -18,6 +18,7 @@ jobs:
           ref: ${{github.sha}}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: "echo file found: ${{ steps.get_file.outputs.data.files }}"
       - run: echo "file_contents = `cat ${{ fromJson(steps.get_file.outputs.data).files[0].filename }}`" >> $GITHUB_ENV
       - uses: docker://pandoc/core:2.9
         id: process_file
@@ -56,9 +57,9 @@ jobs:
           repo: starter #?
           path: _posts/test.md #${{ fromJson(steps.process_file.outputs.data).files[0].filename }}.md # refactor filename
           message: 'new post news'
-          committer:
-            name: 'aecolos'
-            email: 'pedroroque@aecolos.pt.test-google-a.com'
+          #committer:
+            #name: 'aecolos'
+            #email: 'pedroroque@aecolos.pt.test-google-a.com'
           content: ${{steps.set_env.outputs.fileB64}}
           sha: ${{fromJson(steps.get_file_sha.outputs.data).sha}}
         env:
