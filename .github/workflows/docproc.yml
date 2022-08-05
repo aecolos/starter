@@ -18,7 +18,7 @@ jobs:
           ref: ${{github.sha}}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: "echo file found: ${{ fromJson(steps.get_file.outputs.data).files.*.filename }}"
+      - run: "echo file found: ${{ fromJson(steps.get_file.outputs.data).files.*.filename[0] }}"
       - run: echo "file_contents = `cat ${{ fromJson(steps.get_file.outputs.data).files[0].filename }}`" >> $GITHUB_ENV
       - uses: docker://pandoc/core:2.9
         id: process_file
