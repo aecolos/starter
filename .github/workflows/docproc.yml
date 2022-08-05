@@ -8,10 +8,10 @@ on:
 jobs:
   convert_via_pandoc:
     runs-on: ubuntu-latest
+    concurrency: getfile
     steps:
       - uses: octokit/request-action@v2.x
         id: get_file
-        concurrency: getfile
         with:
           route: GET /repos/{owner}/{repo}/commits/{ref}
           owner: aecolos
