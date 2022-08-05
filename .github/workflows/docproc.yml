@@ -8,7 +8,7 @@ on:
 jobs:
   convert_via_pandoc:
     runs-on: ubuntu-latest
-    concurrency: getfile
+    #concurrency: getfile
     steps:
       - uses: octokit/request-action@v2.x
         id: get_file
@@ -21,6 +21,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: "echo file found: ${{ fromJson(steps.get_file.outputs.data).files.*.filename[0] }}"
       - run: echo "file_contents = `cat ${{ fromJson(steps.get_file.outputs.data).files[0].filename }}`" >> $GITHUB_ENV
+        if: ${{ success() }}
       - uses: docker://pandoc/core:2.9
         id: process_file
         with:
