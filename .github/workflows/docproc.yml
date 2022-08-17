@@ -1,4 +1,5 @@
 name: Get file and convert
+on: [push]
 jobs:
   build-site:
     runs-on: ubuntu-latest
