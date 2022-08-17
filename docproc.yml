@@ -1,0 +1,71 @@
+name: Get file and convert
+on:
+  push:
+    branches:
+      - gh-pages
+    paths:
+      - 'docsx/**.docx'
+jobs:
+  convert_via_pandoc:
+    runs-on: ubuntu-latest
+    #concurrency: getfile
+    steps:
+      - uses: octokit/request-action@v2.x
+        id: get_file
+        with:
+          route: GET /repos/{owner}/{repo}/commits/{ref}
+          owner: aecolos
+          repo: starter
+          ref: ${{github.sha}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: "echo file found: ${{ fromJson(steps.get_file.outputs.data).files.length }}"
+      - run: echo "file_contents = `cat ${{ fromJson(steps.get_file.outputs.data).files[0].filename }}`" >> $GITHUB_ENV
+        #if: ${{ success() }}
+      - uses: docker://pandoc/core:2.9
+        id: process_file
+        with:
+          args: "-s ${{ fromJson(steps.get_file.outputs.data).files[0].contents_url }} -t markdown -o test.md" #${{ fromJson(steps.get_file.outputs.data).files[0].filename }}.md # -o .md extension?
+      - run: cat test.md
+      - run: echo "$(<test.md)"
+      #- uses: actions/github-script@v6
+        #id: scripted_get_file
+        #with:
+          #script: |
+            #return github.request("GET /repos/{owner}/{repo}/commits/{ref}", {
+              #owner: "aecolos",
+              #repo: "starter",
+              #ref: "177cbb653772b78c18e87c5c6f849b9f1eb48c91"
+            #});
+      #- run: echo "${{ steps.scripted_get_file.outputs.result.data }}"
+      - name: Build ENV
+        id: set_env
+        run: echo "::set-output name=fileB64::$(base64  test.md)"
+      - uses: octokit/request-action@v2.x
+        id: get_file_sha
+        with:
+          route: GET /repos/{owner}/{repo}/contents/{path}
+          owner: aecolos
+          repo: starter #?
+          path: _posts/test.md #${{ fromJson(steps.process_file.outputs.data).files[0].filename }}.md # refactor filename
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: echo "${{ steps.get_file_sha.outputs.data }}"
+      - uses: octokit/request-action@v2.x
+        id: upload_file
+        with:
+          route: PUT /repos/{owner}/{repo}/contents/{path}
+          owner: aecolos
+          repo: starter #?
+          path: _posts/test.md #${{ fromJson(steps.process_file.outputs.data).files[0].filename }}.md # refactor filename
+          message: 'new post news'
+          #committer:
+            #name: 'aecolos'
+            #email: 'pedroroque@aecolos.pt.test-google-a.com'
+          content: ${{steps.set_env.outputs.fileB64}}
+          sha: ${{fromJson(steps.get_file_sha.outputs.data).sha}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #- run: "echo file uploaded: ${{ steps.upload_file.outputs.data }}"
+      #const file_content = github.rest.repos.getContent('aecolos', 'site', '/docsx')
+      #console.log(file_content)
