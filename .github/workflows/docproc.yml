@@ -7,11 +7,9 @@ jobs:
       - name: convert notebooks and word docs to posts
         uses: fastai/fastpages@master
       - name: Jekyll build
-        uses: docker://fastai/fastpages-jekyll
+        uses: docker://jekyll/jekyll
         with:
-          args: bash -c "jekyll build -V --strict_front_matter --trace"
-        env:
-          JEKYLL_ENV: "production"
+          args: jekyll build
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         if: github.event_name == 'push'
