@@ -11,5 +11,5 @@ jobs:
         if: github.event_name == 'push'
         with:
           deploy_key: ${{ secrets.SSH_DEPLOY_KEY }}
-          publish_branch: master
+          publish_branch: gh-pages
           publish_dir: ./_posts
